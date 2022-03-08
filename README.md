@@ -2,9 +2,9 @@
 チュートリアル
 
 # インストールライブラリ
-sqlalchemy
-passlib
-fastapi
+sqlalchemy <br>
+passlib <br>
+fastapi <br>
 
 # 開始コマンド
 uvicorn main:app --reload
@@ -13,10 +13,10 @@ uvicorn main:app --reload
 python models.py
 
 # フォルダ構成
-fastapi
-├ sqlite.db
-├ crud.py
-├ database.py
-├ main.py
-├ models.py
-└ schemas.py
+fastapi <br>
+├ sqlite.db <br>
+├ crud.py <br>
+├ database.py <br>
+├ main.py <br>
+├ models.py <br>
+└ schemas.py <br>
