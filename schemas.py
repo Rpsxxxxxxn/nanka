@@ -9,7 +9,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    hashed_password: str
+    # hashed_password: str
     is_active: bool
 
     class Config:
@@ -18,6 +18,12 @@ class User(UserBase):
 class ItemBase(BaseModel):
     name: str
     price: int
+
+class Item(ItemBase):
+    id: int
+    
+    class Config:
+        orm_mode = True
 
 class Token(BaseModel):
     access_token: str

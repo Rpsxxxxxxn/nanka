@@ -1,4 +1,5 @@
 
+from typing import List
 from fastapi import Depends, FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -29,9 +30,14 @@ def root():
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
-    if db_user:
+    if db_user is None:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
+
+@app.get("/users/", response_model=List[schemas.User])
+def read_users(db: Session = Depends(database.get_db)):
+    db_user = crud.get_users(db)
+    return db_user
 
 @app.get("/users/{user_id}", response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(database.get_db)):
@@ -43,6 +49,11 @@ def read_user(user_id: int, db: Session = Depends(database.get_db)):
 @app.post("/create_item")
 def create_item(item: schemas.ItemBase, db: Session = Depends(database.get_db)):
     db_item = crud.create_item(db=db, item=item)
-    if db_item:
-        raise HTTPException(status_code=400, detail="Sorry...")
+    if db_item is None:
+        raise HTTPException(status_code=400, detail="item none")
+    return db_item
+
+@app.get("/item/{name}", response_model=schemas.Item)
+def read_item(name: str, db: Session = Depends(database.get_db)):
+    db_item = crud.get_item(db, name=name)
     return db_item

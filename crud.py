@@ -32,6 +32,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
+def get_users(db: Session):
+    return db.query(models.User).all()
+
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
@@ -43,10 +46,10 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 def get_item(db: Session, name: str):
-    return db.query(models.Item).filter(models.Item,name == name).first()
+    return db.query(models.Item).filter(models.Item.name == name).first()
 
 def create_item(db: Session, item: schemas.ItemBase):
-    db_item = models.Item(name=item.name)
+    db_item = models.Item(name=item.name, price=item.price)
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
